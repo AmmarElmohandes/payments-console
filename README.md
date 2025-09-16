@@ -2,21 +2,23 @@
 ## Clone and install
 
 git clone https://github.com/yourname/fake-payments-console.git
-cd fake-payments-console
+
+cd payments-console
+
 npm install
 
 
 ## Project structure
-app/                   # Next.js App Router
-  page.tsx             # Home (list + search + filter)
-  new/page.tsx         # New Payment form
-  payments/[id]/page.tsx  # Payment details
-  pay/[publicId]/page.tsx # Customer-facing link
-  loading.tsx          # Global loading state
-  error.tsx            # Global error state
-lib/
-  payments.ts          # In-memory or JSON file storage
-payments.json          # Optional JSON data store
+app/&nbsp;&nbsp;&nbsp;# Next.js App Router\
+  page.tsx  &nbsp;&nbsp; # Home (list + search + filter)\
+  new/page.tsx &nbsp; # New Payment form\
+  payments/[id]/page.tsx &nbsp;  # Payment details\
+  pay/[publicId]/page.tsx &nbsp; # Customer-facing link\
+  loading.tsx  &nbsp;        # Global loading state\
+  error.tsx     &nbsp;       # Global error state\
+lib/\
+  payments.ts    &nbsp;      # In-memory or JSON file storage\
+payments.json    &nbsp;      # Optional JSON data store\
 
 
 
