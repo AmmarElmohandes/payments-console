@@ -1,7 +1,7 @@
 ## 🚀 Setup
 ## Clone and install
 
-git clone https://github.com/yourname/fake-payments-console.git
+git clone https://github.com/yourname/payments-console.git
 
 cd payments-console
 
