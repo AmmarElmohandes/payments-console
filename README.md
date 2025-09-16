@@ -18,7 +18,7 @@ app/&nbsp;&nbsp;&nbsp;# Next.js App Router\
   error.tsx     &nbsp;       # Global error state\
 lib/\
   payments.ts    &nbsp;      # In-memory or JSON file storage\
-payments.json    &nbsp;      # Optional JSON data store\
+payments.json    &nbsp;      # Optional JSON data store
 
 
 
