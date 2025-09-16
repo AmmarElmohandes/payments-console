@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🚀 Setup
+## Clone and install
 
-## Getting Started
+git clone https://github.com/yourname/fake-payments-console.git
+cd fake-payments-console
+npm install
 
-First, run the development server:
 
-```bash
+## Project structure
+app/                   # Next.js App Router
+  page.tsx             # Home (list + search + filter)
+  new/page.tsx         # New Payment form
+  payments/[id]/page.tsx  # Payment details
+  pay/[publicId]/page.tsx # Customer-facing link
+  loading.tsx          # Global loading state
+  error.tsx            # Global error state
+lib/
+  payments.ts          # In-memory or JSON file storage
+payments.json          # Optional JSON data store
+
+
+
+## Development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ▶️Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Home /
 
-## Learn More
+Table of payments (System ID, Merchant Order ID, Amount, Status, Created)
 
-To learn more about Next.js, take a look at the following resources:
+Search by merchantOrderId
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Filter by status (pending | paid | canceled)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Loading, empty, and error states
 
-## Deploy on Vercel
+New Payment /new
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Form with amount, currency (EGP), and merchantOrderId
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Creates a payment (status = pending)
+
+Redirects to payment details
+
+Payment Details /payments/[id]
+
+Shows all fields, timestamps, and copyable Payment Link
+
+Displays activity (status updates)
+
+Payment Link /pay/[publicId]
+
+Customer chooses Paid or Cancel
+
+Updates status and redirects back
+
+## ✅ Finished Parts
+
+ Next.js App Router + TypeScript
+
+ Server Actions for create/mark paid/cancel
+
+ revalidatePath on mutations
+
+ In-memory or JSON-file data storage
+
+ Home: list, search, filter, empty state
+
+ Loading state (loading.tsx)
+
+ Error state (error.tsx)
+
+ Basic CSS (no UI kit)
+
+ ## ✂️ Cut Parts (not implemented)
+
+Idempotency keys
+
+HMAC signatures / secure tokens
+
+Webhooks
+
+Authentication / multi-merchant support
+
+Styling beyond basic HTML + CSS

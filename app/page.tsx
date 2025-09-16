@@ -1,95 +1,66 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// app/page.tsx
+import Link from "next/link";
+import { getPayments } from "@/lib/payments";
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { q?: string; status?: string };
+}) {
+  const { q, status } = await searchParams;
+  const payments = getPayments()
+    .filter((p) => (q ? p.merchantOrderId.includes(q) : true))
+    .filter((p) => (status ? p.status === status : true));
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main>
+      <h1>Payments Console</h1>
+      <form>
+        <input name="q" placeholder="Search by Order ID" defaultValue={q} />
+        <select name="status" defaultValue={status}>
+          <option value="">All</option>
+          <option value="pending">Pending</option>
+          <option value="paid">Paid</option>
+          <option value="canceled">Canceled</option>
+        </select>
+        <button type="submit">Filter</button>
+      </form>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+      <Link href="/new">+ New Payment</Link>
+
+      {payments.length === 0 ? (
+        <div className="empty">
+          <p>No payments found.</p>
+          <a href="/new">Create your first payment</a>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>System ID</th>
+              <th>Order ID</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {payments.map((p) => (
+              <tr key={p.id}>
+                <td>
+                  <Link href={`/payments/${p.id}`}>{p.id}</Link>
+                </td>
+                <td>{p.merchantOrderId}</td>
+                <td>
+                  {(p.amount / 100).toFixed(2)} {p.currency}
+                </td>
+                <td>{p.status}</td>
+                <td>{p.createdAt}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </main>
   );
 }

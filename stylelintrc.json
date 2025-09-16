@@ -1,0 +1,14 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "ignoreFiles": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "rules": {
+    "property-no-unknown": [true, {
+      "ignoreProperties": ["/^--/"] 
+    }]
+  }
+}
